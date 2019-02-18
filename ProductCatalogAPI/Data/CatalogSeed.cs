@@ -6,8 +6,30 @@ using System.Threading.Tasks;
 
 namespace ProductCatalogAPI.Data
 {
-	public class DataSeed
+	public class CatalogSeed
 	{
+
+		public static async Task SeedAsync(CatalogContext context)
+		{
+			if (!context.CatalogBrands.Any())
+			{
+				context.CatalogBrands.AddRange(GetPreconfiguredCatalogBrands());
+				await context.SaveChangesAsync();
+			}
+
+			if (!context.CatalogTypes.Any())
+			{
+				context.CatalogTypes.AddRange(GetPreconfiguredCatalogTypes());
+				await context.SaveChangesAsync();
+			}
+
+			if (!context.CatalogItems.Any())
+			{
+				context.CatalogItems.AddRange(GetPreconfiguredCatalogItems());
+				await context.SaveChangesAsync();
+			}
+		}
+
 		static IEnumerable<CatalogBrand> GetPreconfiguredCatalogBrands()
 		{
 			return new List<CatalogBrand>()
